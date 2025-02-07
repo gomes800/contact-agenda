@@ -2,17 +2,26 @@ package domain;
 
 public class Contact {
 
-    private Long id;
+    private Integer id;
     private String name;
-    private Long phone;
+    private String phone;
     private String email;
 
     public Contact() {}
 
-    public Contact(String name, Long phone, String email) {
+    public Contact(Integer id, String name, String phone, String email) {
+        this.id = id;
         this.name = name;
         this.phone = phone;
         this.email = email;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -23,11 +32,11 @@ public class Contact {
         this.name = name;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -37,5 +46,15 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
