@@ -1,0 +1,4 @@
+Contact{id=0, name='janex', phone='21993915998', email='janex@gmail.com'}
+Contact{id=0, name='xorex', phone='21993915998', email='janex@gmail.com'}
+Contact{id=0, name='latex', phone='21993915998', email='janex@gmail.com'}
+

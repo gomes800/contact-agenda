@@ -2,28 +2,71 @@ package controllers;
 
 import domain.Contact;
 
-import javax.imageio.IIOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ContactManager {
-    public static void main(String[] args) {
-        ArrayList<Contact> contacts = new ArrayList<Contact>();
 
-        contacts.add(new Contact(0, "janex", "21993915998", "janex@gmail.com"));
+    ArrayList<Contact> contacts = new ArrayList<Contact>();
+    String path = "C:\\Users\\CAIXA1\\Documents\\Projects\\contact-agenda\\contacts.txt";
+    int cont = 0;
 
-        String path = "C:\\Users\\financeiro\\Desktop\\projetos\\test_contacts.txt";
+    public void initializer() {
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println("Linha lida: " + line);
+                Pattern pattern = Pattern.compile("Contact\\{id=(\\d+), name='(.*?)', phone='(.*?)', email='(.*?)'\\}");
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    int id = Integer.parseInt(matcher.group(1));
+                    String name = matcher.group(2);
+                    String phone = matcher.group(3);
+                    String email = matcher.group(4);
 
-            for (Contact contact : contacts) {
-                bw.write(contact.toString());
-                bw.newLine();
+                    Contact contact = new Contact(id, name, phone, email);
+                    contacts.add(contact);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addContact() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+            contacts.add(new Contact(0, "janex", "21993915998", "janex@gmail.com"));
+            cont += 1;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Contact findByName(String name, String path) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))){
+            String line;
+            Pattern pattern = Pattern.compile("Contact\\{id=(\\d+), name='(.*?)', phone='(.*?)', email='(.*?)'\\}");
+
+            while ((line = br.readLine()) != null) {
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    String nameFound = matcher.group(2);
+                    if (nameFound.equalsIgnoreCase(name)) {
+                        int id = Integer.parseInt(matcher.group(1));
+                        String phone = matcher.group(3);
+                        String email = matcher.group(4);
+
+                        return new Contact(id, nameFound, phone, email);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
