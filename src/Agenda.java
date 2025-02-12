@@ -5,5 +5,8 @@ public class Agenda {
         ContactManager contactManager = new ContactManager();
 
         contactManager.initializer();
+        System.out.println("adicionando contato teste: ");
+        contactManager.addContact();
+        System.out.println("Contato adicionado.");
     }
 }

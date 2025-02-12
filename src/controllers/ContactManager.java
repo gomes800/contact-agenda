@@ -4,6 +4,7 @@ import domain.Contact;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +12,7 @@ public class ContactManager {
 
     ArrayList<Contact> contacts = new ArrayList<Contact>();
     String path = "C:\\Users\\CAIXA1\\Documents\\Projects\\contact-agenda\\contacts.txt";
-    int cont = 0;
+    Scanner sc = new Scanner(System.in);
 
     public void initializer() {
 
@@ -37,9 +38,16 @@ public class ContactManager {
     }
 
     public void addContact() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
-            contacts.add(new Contact(0, "janex", "21993915998", "janex@gmail.com"));
-            cont += 1;
+        int id = contacts.size() + 1;
+        System.out.println("Nome: ");
+        String name = sc.nextLine();
+        System.out.println("Telefone: ");
+        String phone = sc.nextLine();
+        System.out.println("Email: ");
+        String email = sc.nextLine();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            contacts.add(new Contact(id, name, phone, email));
+            bw.write(contacts.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
