@@ -45,7 +45,7 @@ public class ContactRepository {
     }
 
     public void saveContacts(List<Contact> contacts) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (Contact contact : contacts) {
                 bw.write(contact.toString());
                 bw.newLine();
